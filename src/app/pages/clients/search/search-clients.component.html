@@ -1,0 +1,94 @@
+<div class="row animate__animated animate__fadeIn animate__fast mb-3">
+    <div class="col-xs-12 col-lg-6">
+      <form
+        [formGroup]="searchClientForm"
+        (keyup.enter)="searchClient()"
+        autocomplete="off"
+        class="navbar-search form-inline"
+      >
+        <div class="input-group input-group-merge search-bar">
+          <span class="input-group-text" id="topbar-addon"
+            ><span class="fas fa-search"></span
+          ></span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar.."
+            formControlName="searchTerm"
+            [class.is-invalid]="invalidFormField('searchTerm')"
+            autofocus
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="row animate__animated animate__fadeIn animate__fast">
+    <div class="col-12 mb-4">
+      <div class="card border-light shadow-sm">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">
+              <h4>Búsqueda</h4>
+            </div>
+            <div class="col-6 text-right">
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm text-secondary"
+                role="status"
+              ></span>
+              <span *ngIf="formSubmitted && !loading && clients.length <= 0"
+                ><span class="fas fa-exclamation-circle text-danger"></span> No se encontraron coincidencias</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rol</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let client of clients">
+                <th>{{ client.name | titlecase }}</th>
+                <th>{{ client.email }}</th>
+  
+                <td [ngSwitch]="client.role">
+                  <div *ngSwitchCase="'USER_ROLE'">
+                    <span class="fas fa-user text-primary me-3"></span
+                    >Usuario
+                  </div>
+                  <div *ngSwitchCase="'ADMIN_ROLE'">
+                    <span class="fas fa-user-shield text-danger me-3"></span
+                    >Administrador
+                  </div>
+                  <div *ngSwitchDefault>
+                    <span
+                      class="fas fa-exclamation-circle text-danger me-3"
+                    ></span
+                    >Error en el rol
+                  </div>
+                </td>
+
+                <td>
+                  <a
+                    [routerLink]="['/dashboard', 'clients', 'view', client.uid ]"
+                    class="btn btn-sm btn-secondary"
+                    ><span
+                      class="fas fa-chevron-circle-right text-primary me-2"
+                    ></span
+                    >Ver cliente</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>  

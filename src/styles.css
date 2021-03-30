@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+.invalid-feedback-form {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #fa5252;
+}
+
+.content {
+  margin-top: 20px;
+}

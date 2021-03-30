@@ -1,0 +1,126 @@
+<div class="row animate__animated animate__fadeIn animate__fast mb-3">
+  <div class="col-xs-12 col-lg-6">
+    <form
+      [formGroup]="searchForm"
+      (keyup.enter)="searchTerm()"
+      autocomplete="off"
+      class="navbar-search form-inline"
+    >
+      <div class="input-group input-group-merge search-bar">
+        <span class="input-group-text" id="topbar-addon"
+          ><span class="fas fa-search"></span
+        ></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar.."
+          formControlName="searchTerm"
+          [class.is-invalid]="invalidFormField('searchTerm')"
+          autofocus
+        />
+      </div>
+      <div class="form-check form-switch m-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          formControlName="completed"
+          [checked]="searchForm.value.completed"
+          (ngModelChange)="searchTerm()"
+        />
+        <label class="form-check-label">Solo completadas</label>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row animate__animated animate__fadeIn animate__fast">
+  <div class="col-12 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <h4>Búsqueda</h4>
+          </div>
+          <div class="col-6 text-right">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm text-secondary"
+              role="status"
+            ></span>
+            <span *ngIf="formSubmitted && !loading && order.length <= 0"
+              ><span class="fas fa-exclamation-circle text-danger"></span> No se encontraron coincidencias</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col-2">#</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Atendido por</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of order">
+              <th scope="row">{{ order.order }}</th>
+              <th>{{ order.createAt | date: "dd/MM/yy HH:mm" }}</th>
+              <th>{{ order.client.name | titlecase }}</th>
+              <td>{{ order.product }}</td>
+
+              <td [ngSwitch]="order.type">
+                <div *ngSwitchCase="'budget'">
+                  <span class="fas fa-tools text-primary me-3"></span
+                  >Presupuesto
+                </div>
+                <div *ngSwitchCase="'warranty'">
+                  <span class="fas fa-user-shield text-info me-3"></span
+                  >Garantía
+                </div>
+                <div *ngSwitchDefault>
+                  <span
+                    class="fas fa-exclamation-circle text-danger me-3"
+                  ></span
+                  >Error en el tipo
+                </div>
+              </td>
+
+              <td [ngSwitch]="order.status">
+                <div *ngSwitchCase="'completed'">
+                  <span class="fas fa-check-circle text-success me-3"></span
+                  >Completado
+                </div>
+                <div *ngSwitchCase="'pending'">
+                  <span class="fas fa-clock text-warning me-3"></span>Pendiente
+                </div>
+                <div *ngSwitchDefault>
+                  <span
+                    class="fas fa-exclamation-circle text-danger me-3"
+                  ></span
+                  >Error en el estado
+                </div>
+              </td>
+              <td>{{ order.servedBy.name | titlecase }}</td>
+              <td>
+                <a
+                  [routerLink]="['/dashboard', 'view', order._id]"
+                  class="btn btn-sm btn-secondary"
+                  ><span
+                    class="fas fa-chevron-circle-right text-primary me-2"
+                  ></span
+                  >Ver orden</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

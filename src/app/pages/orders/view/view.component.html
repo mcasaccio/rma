@@ -1,0 +1,126 @@
+<div class="row animate__animated animate__fadeIn animate__fast">
+  <div class="col-12 col-xl-8">
+    <div class="card card-body shadow-sm mb-4">
+      <div class="row">
+        <div class="col">
+          <h4 class="mb-4">Editar orden</h4>
+        </div>
+        <div class="col-2 text-right">
+          <h4 *ngIf="!loading" class="text-right">#{{ order.order }}</h4>
+        </div>
+      </div>
+
+      <form [formGroup]="orderForm" (submit)="updateOrder()" autocomplete="off">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div>
+              <label>Cliente</label>
+              <select class="form-control" formControlName="client">
+                <option value="" [selected]="true" hidden disabled>
+                  Seleccione uno
+                </option>
+                <option *ngFor="let client of clients" [value]="client.uid">
+                  {{ client.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div>
+              <label>Tipo</label>
+              <select class="form-control" formControlName="type">
+                <option value="" [selected]="true" hidden disabled>
+                  Seleccione uno
+                </option>
+                <option value="budget">Presupuesto</option>
+                <option value="warranty">Garantía</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div>
+              <label>Proveedor</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Proveedor"
+                formControlName="provider"
+                [class.is-invalid]="invalidFormField('provider')"
+              />
+              <span
+                *ngIf="invalidFormField('provider')"
+                class="invalid-feedback-form"
+                >El proveedor es obligatorio</span
+              >
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div>
+              <label>Producto</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Producto"
+                formControlName="product"
+                [class.is-invalid]="invalidFormField('product')"
+              />
+              <span
+                *ngIf="invalidFormField('product')"
+                class="invalid-feedback-form"
+                >El producto es obligatorio</span
+              >
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="my-4">
+              <label>Motivos de ingreso</label>
+              <textarea
+                class="form-control"
+                placeholder="Falla detectada en..."
+                formControlName="reason"
+                rows="4"
+                [class.is-invalid]="invalidFormField('reason')"
+              ></textarea>
+              <span
+                *ngIf="invalidFormField('reason')"
+                class="invalid-feedback-form"
+                >El motivo es obligatorio</span
+              >
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="my-4">
+              <label>Estado</label>
+              <select class="form-control" formControlName="status">
+                <option value="" [selected]="true" hidden disabled>
+                  Seleccione uno
+                </option>
+                <option value="pending">Pendiente</option>
+                <option value="completed">Completado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <button
+            type="submit"
+            class="btn btn-primary mt-3 btn-block"
+            [disabled]="loading"
+          >
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></span>
+            Guadar cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

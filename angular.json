@@ -28,9 +28,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/volt.css",
+              "src/assets/css/fontawesome.css",
+              "src/assets/css/animate.css"
             ],
-            "scripts": []
+            "scripts": [
+                "src/assets/js/boostrap.js",
+                "src/assets/js/volt.js",
+                "src/assets/js/smooth-scroll.js",
+                "src/assets/js/simplebar.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -50,8 +58,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

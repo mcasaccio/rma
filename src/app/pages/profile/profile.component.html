@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Mi perfil de usuario</h4>
+        <form
+          class="form p-t-20"
+          [formGroup]="perfilForm"
+          (submit)="updateProfile()"
+          autocomplete="off"
+        >
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Nombre del usuario"
+              formControlName="name"
+              [class.is-invalid]="invalidFormField('name')"
+            />
+            <span
+              *ngIf="invalidFormField('name')"
+              class="invalid-feedback-form"
+              >El nombre es obligatorio</span
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              [readonly]="user.google"
+              [class.is-invalid]="invalidFormField('email')"
+            />
+            <span
+              *ngIf="invalidFormField('email')"
+              class="invalid-feedback-form"
+              >El correo es obligatorio</span
+            >
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="btn btn-primary mt-3 btn-block"
+              [disabled]="loading"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+              Guadar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

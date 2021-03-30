@@ -1,0 +1,174 @@
+<div class="row">
+  <div class="col-6"><h1>Ordenes</h1></div>
+  <div class="col-6">
+    <button
+      (click)="logout()"
+      class="btn btn-outline-danger btn-sm d-none d-md-block"
+      style="float: right"
+      type="button"
+    >
+      <span class="fas fa-running me-2"></span>Desconectarme
+    </button>
+  </div>
+
+  <div class="col-12 col-sm-6 col-xl-6 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div
+            class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center"
+          >
+            <div
+              class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"
+            >
+              <span class="fas fa-clipboard-list"></span>
+            </div>
+            <div class="d-sm-none">
+              <h2 class="h5">Pendientes</h2>
+              <h3 class="mb-1">{{ dashboard?.pending }}</h3>
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+            </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">Pendientes</h2>
+              <h3 class="mb-1">{{ dashboard?.pending }}</h3>
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-6 col-xl-6 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div
+            class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center"
+          >
+            <div
+              class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"
+            >
+              <span class="fas fa-clipboard-check"></span>
+            </div>
+            <div class="d-sm-none">
+              <h2 class="h5">Total</h2>
+              <h3 class="mb-1">{{ dashboard?.total }}</h3>
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+            </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">Totales</h2>
+              <h3 class="mb-1">{{ dashboard?.total }}</h3>
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="!loading"
+  class="row animate__animated animate__fadeIn animate__fast"
+>
+  <div class="col-12 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h4>Ultimas ordenes</h4>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col-2">#</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Atendido por</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of dashboard.orders">
+              <th scope="row">{{ order.order }}</th>
+              <th>{{ order.createAt | date: "dd/MM/yy HH:mm" }}</th>
+              <th>{{ order.client.name | titlecase}}</th>
+              <td>{{ order.product }}</td>
+
+              <td [ngSwitch]="order.type">
+                <div *ngSwitchCase="'budget'">
+                  <span class="fas fa-tools text-primary me-3"></span
+                  >Presupuesto
+                </div>
+                <div *ngSwitchCase="'warranty'">
+                  <span class="fas fa-user-shield text-info me-3"></span
+                  >Garantía
+                </div>
+                <div *ngSwitchDefault>
+                  <span
+                    class="fas fa-exclamation-circle text-danger me-3"
+                  ></span
+                  >Error en el tipo
+                </div>
+              </td>
+
+              <td [ngSwitch]="order.status">
+                <div *ngSwitchCase="'completed'">
+                  <span class="fas fa-check-circle text-success me-3"></span
+                  >Completado
+                </div>
+                <div *ngSwitchCase="'pending'">
+                  <span class="fas fa-clock text-warning me-3"></span>Pendiente
+                </div>
+                <div *ngSwitchDefault>
+                  <span
+                    class="fas fa-exclamation-circle text-danger me-3"
+                  ></span
+                  >Error en el estado
+                </div>
+              </td>
+              <td>{{ order.servedBy.name | titlecase }}</td>
+              <td>
+                <a
+                  [routerLink]="['view', order._id]"
+                  class="btn btn-sm btn-secondary"
+                  ><span
+                    class="fas fa-chevron-circle-right text-primary me-2"
+                  ></span
+                  >Ver orden</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
