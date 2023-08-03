@@ -3,9 +3,9 @@
 
 RMA Service es un proyecto realizado en Angular con un servidor API Rest montado en Node JS.
 
-> El sitio tomara 30 segundos para lanzar un nuevo deploy al abrir el link (Heroku)
+> El sitio tomara 30 segundos / 1 minuto para lanzar un nuevo deploy al abrir el link (OnRender)
 
-Demo online: [https://rma-service.herokuapp.com](https://rmaservice.onrender.com/)
+Demo online: [https://rmaservice.onrender.com](https://rmaservice.onrender.com/)
 
 Usuario administrador:
 > Email: admin@linkedin.com
